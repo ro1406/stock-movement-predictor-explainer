@@ -2,6 +2,7 @@ import os
 from src.data_loader import fetch_multiple_stocks_price_data, fetch_stock_news
 import time
 import pandas as pd
+from tqdm import tqdm
 
 
 company_names = {
@@ -62,12 +63,12 @@ company_names = {
 t0=time.time()
 stock_data = fetch_multiple_stocks_price_data(start_date="2025-01-01")
 print("All stock data fetched! Time taken: {:.4f}s".format(time.time()-t0))
-print(stock_data.head())
+print(stock_data['AAPL'].head())
 
 #Download the News Data
 news_data = {}
 t0=time.time()
-for ticker in company_names:
+for ticker in tqdm(company_names):
     name = company_names.get(ticker, ticker)  # Fallback to ticker
     try:
         df = fetch_stock_news(ticker, name)
@@ -82,3 +83,6 @@ print(news_data_df.head())
 
 #Merge the data
 
+
+
+#Run Sentiment Analysis model on the news data
