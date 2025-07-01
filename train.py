@@ -62,6 +62,7 @@ company_names = {
 t0=time.time()
 stock_data = fetch_multiple_stocks_price_data(start_date="2025-01-01")
 print("All stock data fetched! Time taken: {:.4f}s".format(time.time()-t0))
+print(stock_data.head())
 
 #Download the News Data
 news_data = {}
@@ -77,7 +78,7 @@ for ticker in company_names:
 
 print("All News data fetched! Time taken: {:.4f}s".format(time.time()-t0))
 news_data_df = pd.DataFrame(news_data)
-
+print(news_data_df.head())
 
 #Merge the data
 
