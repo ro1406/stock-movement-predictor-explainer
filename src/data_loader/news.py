@@ -80,3 +80,7 @@ def fetch_stock_news(
 
     return df
 
+if __name__ == "__main__":
+    df = fetch_stock_news('AAPL', 'Apple',days_back=10)
+    print("Fetched all news about AAPL!")
+    print(df.head())

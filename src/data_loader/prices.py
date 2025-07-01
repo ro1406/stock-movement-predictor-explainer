@@ -3,19 +3,20 @@ from pathlib import Path
 import yfinance as yf
 import pandas as pd
 from datetime import datetime
+from tqdm import tqdm
 
 # Folder to cache downloaded data
 CACHE_DIR = Path("data/cache/prices")
 CACHE_DIR.mkdir(parents=True, exist_ok=True)
 
 # Default list of popular S&P 500 stocks (modifiable)
-TOP_50_TICKERS = [
+TOP_50_TICKERS = list(sorted([
     "AAPL", "MSFT", "AMZN", "GOOG", "META", "NVDA", "TSLA", "BRK-B", "UNH", "JNJ",
     "V", "JPM", "PG", "MA", "HD", "XOM", "LLY", "ABBV", "MRK", "PEP",
     "AVGO", "COST", "KO", "BAC", "WMT", "ADBE", "DIS", "PFE", "CVX", "CSCO",
     "TMO", "NFLX", "NKE", "ABT", "CRM", "INTC", "DHR", "TXN", "AMD", "VZ",
     "LIN", "HON", "MCD", "QCOM", "NEE", "ACN", "PM", "UPS", "AMGN", "LOW"
-]
+]))
 
 def fetch_stock_price_data(
     ticker: str,
@@ -73,7 +74,7 @@ def fetch_multiple_stocks_price_data(
         tickers = TOP_50_TICKERS
 
     all_data = {}
-    for ticker in tickers:
+    for ticker in tqdm(tickers):
         try:
             df = fetch_stock_price_data(ticker, start_date, end_date, force_refresh)
             if not df.empty:
